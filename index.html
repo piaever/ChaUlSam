@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026년 인천 SW미래채움 교육 타임라인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .filters {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .filter-group input, .filter-group select {
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-group input:focus, .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .timeline {
+            padding: 30px 20px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding-left: 60px;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(5px);
+        }
+
+        .timeline-item.past {
+            opacity: 0.5;
+        }
+
+        .timeline-item.past .timeline-content {
+            background: #f8f9fa;
+            border-color: #dee2e6;
+        }
+
+        .timeline-item.past .timeline-date {
+            background: #adb5bd;
+        }
+
+        .timeline-content {
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .timeline-content:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+            white-space: nowrap;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+        }
+
+        .institution-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 8px;
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #667eea;
+            min-width: 90px;
+            margin-right: 10px;
+        }
+
+        .info-value {
+            color: #4a5568;
+            flex: 1;
+        }
+
+        .details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e9ecef;
+            animation: fadeIn 0.3s;
+        }
+
+        .details.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toggle-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 12px;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+            font-size: 16px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .header {
+                padding: 40px;
+            }
+
+            .filters {
+                padding: 30px 40px;
+            }
+
+            .timeline {
+                padding: 40px;
+            }
+
+            .timeline::before {
+                left: 50%;
+                width: 4px;
+                transform: translateX(-50%);
+            }
+
+            .timeline-item {
+                padding-left: 0;
+            }
+
+            .timeline-item.left {
+                justify-content: flex-start;
+            }
+
+            .timeline-item.right {
+                justify-content: flex-end;
+            }
+
+            .timeline-content {
+                width: 45%;
+            }
+
+            .timeline-date {
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+
+            .institution-name {
+                font-size: 20px;
+            }
+
+            .info-row {
+                font-size: 14px;
+            }
+
+            .info-label {
+                min-width: 120px;
+            }
+
+            .stats {
+                padding: 30px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 2026년 인천 SW미래채움 교육 타임라인</h1>
+            <p>협동조합과 함께하는 찾아가는 SW교육 일정</p>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>🔍 검색:</label>
+                <input type="text" id="searchInput" placeholder="기관명 2글자 이상 입력...">
+                <label>📅 월:</label>
+                <select id="monthFilter">
+                    <option value="">전체</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats" id="stats"></div>
+
+        <div class="timeline" id="timeline"></div>
+    </div>
+
+    <script>
+        // 실제 데이터를 여기에 삽입
+        const educationData = [
+  {
+    "배정번호": "A03026(H)",
+    "교육날짜": "2020-03-06",
+    "교육회차": "1*2",
+    "교육시간": "15:00~16:30",
+    "기관명": "가온지역아동",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "8",
+    "참여강사1": "임소영",
+    "참여강사2": "김형숙",
+    "참여강사3": "",
+    "주소": "인천광역시 남동구 구월남로 68 2층",
+    "담당자": "백민주",
+    "연락처": "032-428-4348"
+  },
+  {
+    "배정번호": "A03026(H)",
+    "교육날짜": "2020-03-13",
+    "교육회차": "2*2",
+    "교육시간": "15:00~16:30",
+    "기관명": "가온지역아동",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "8",
+    "참여강사1": "임소영",
+    "참여강사2": "김진향",
+    "참여강사3": "",
+    "주소": "인천광역시 남동구 구월남로 68 2층",
+    "담당자": "백민주",
+    "연락처": "032-428-4348"
+  },
+  {
+    "배정번호": "A01052(H)",
+    "교육날짜": "2026-01-21",
+    "교육회차": "1*2",
+    "교육시간": "13:00~14:30",
+    "기관명": "가온지역아동",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "11",
+    "참여강사1": "임소영",
+    "참여강사2": "이정미",
+    "참여강사3": "",
+    "주소": "인천광역시 서구 염곡로 383번길 24",
+    "담당자": "이경애",
+    "연락처": "010-5346-5747"
+  },
+  {
+    "배정번호": "A01053(H)",
+    "교육날짜": "2026-01-21",
+    "교육회차": "1*2",
+    "교육시간": "13:00~14:30",
+    "기관명": "가온지역아동",
+    "학년구분": "중등",
+    "학년": "1~2",
+    "신청총인원": "7",
+    "참여강사1": "김진향",
+    "참여강사2": "김형숙",
+    "참여강사3": "",
+    "주소": "인천광역시 서구 염곡로 383번길 24",
+    "담당자": "이경애",
+    "연락처": "010-5346-5747"
+  },
+  {
+    "배정번호": "A01052(H)",
+    "교육날짜": "2026-01-28",
+    "교육회차": "2*2",
+    "교육시간": "13:00~14:30",
+    "기관명": "가온지역아동",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "11",
+    "참여강사1": "임소영",
+    "참여강사2": "이정미",
+    "참여강사3": "",
+    "주소": "인천광역시 서구 염곡로 383번길 24",
+    "담당자": "이경애",
+    "연락처": "010-5346-5747"
+  },
+  {
+    "배정번호": "A01053(H)",
+    "교육날짜": "2026-01-28",
+    "교육회차": "2*2",
+    "교육시간": "13:00~14:30",
+    "기관명": "가온지역아동",
+    "학년구분": "중등",
+    "학년": "1~2",
+    "신청총인원": "7",
+    "참여강사1": "김진향",
+    "참여강사2": "김형숙",
+    "참여강사3": "",
+    "주소": "인천광역시 서구 염곡로 383번길 24",
+    "담당자": "이경애",
+    "연락처": "010-5346-5747"
+  },
+  {
+    "배정번호": "A02034(H)",
+    "교육날짜": "2026-02-02",
+    "교육회차": "1*2",
+    "교육시간": "15:00~16:30",
+    "기관명": "디아스포라 ",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "7",
+    "참여강사1": "조윤희",
+    "참여강사2": "황미현",
+    "참여강사3": "",
+    "주소": "인천광역시 연수구 함박로 77",
+    "담당자": "박봉수",
+    "연락처": "010-6273-1314"
+  },
+  {
+    "배정번호": "A02090(H)",
+    "교육날짜": "2026-02-05",
+    "교육회차": "1*2",
+    "교육시간": "16:00~17:30",
+    "기관명": "아이원지역아동",
+    "학년구분": "초등",
+    "학년": "5~6",
+    "신청총인원": "7",
+    "참여강사1": "김진향",
+    "참여강사2": "김형숙",
+    "참여강사3": "",
+    "주소": "인천광역시 남동구 주안로259번길 23 1층",
+    "담당자": "박지현",
+    "연락처": "032-432-4344"
+  },
+  {
+    "배정번호": "A02089(H)",
+    "교육날짜": "2026-02-05",
+    "교육회차": "1*2",
+    "교육시간": "16:00~17:30",
+    "기관명": "아이원지역아동",
+    "학년구분": "초등",
+    "학년": "3~4",
+    "신청총인원": "7",
+    "참여강사1": "조윤희",
+    "참여강사2": "신나영",
+    "참여강사3": "",
+    "주소": "인천광역시 남동구 주안로259번길 23 1층",
+    "담당자": "박지현",
+    "연락처": "032-432-4344"
+  },
+  {
+    "배정번호": "A02034(H)",
+    "교육날짜": "2026-02-09",
+    "교육회차": "2*2",
+    "교육시간": "15:00~16:30",
+    "기관명": "디아스포라",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "7",
+    "참여강사1": "조윤희",
+    "참여강사2": "황미현",
+    "참여강사3": "",
+    "주소": "인천광역시 연수구 함박로 77",
+    "담당자": "박봉수",
+    "연락처": "010-6273-1314"
+  },
+  {
+    "배정번호": "A02072(H)",
+    "교육날짜": "2026-02-09",
+    "교육회차": "1*2",
+    "교육시간": "13:00~14:30",
+    "기관명": "석남지역아동",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "11",
+    "참여강사1": "신나영",
+    "참여강사2": "김형숙",
+    "참여강사3": "",
+    "주소": "인천광역시 서구 서달로137번길 13 신광아파트 상가",
+    "담당자": "",
+    "연락처": "032-579-3654"
+  },
+  {
+    "배정번호": "A02073(H)",
+    "교육날짜": "2026-02-09",
+    "교육회차": "1*2",
+    "교육시간": "13:00~14:30",
+    "기관명": "석남지역아동",
+    "학년구분": "중등",
+    "학년": "1~2",
+    "신청총인원": "12",
+    "참여강사1": "이정미",
+    "참여강사2": "임소영",
+    "참여강사3": "",
+    "주소": "인천광역시 서구 서달로137번길 13 신광아파트 상가",
+    "담당자": "",
+    "연락처": "032-579-3654"
+  },
+  {
+    "배정번호": "A02089(H)",
+    "교육날짜": "2026-02-12",
+    "교육회차": "2*2",
+    "교육시간": "16:00~17:30",
+    "기관명": "아이원지역아동",
+    "학년구분": "초등",
+    "학년": "3~4",
+    "신청총인원": "7",
+    "참여강사1": "조윤희",
+    "참여강사2": "신나영",
+    "참여강사3": "",
+    "주소": "인천광역시 남동구 주안로259번길 23 1층",
+    "담당자": "박지현",
+    "연락처": "032-432-4344"
+  },
+  {
+    "배정번호": "A02090(H)",
+    "교육날짜": "2026-02-12",
+    "교육회차": "2*2",
+    "교육시간": "16:00~17:30",
+    "기관명": "아이원지역아동",
+    "학년구분": "초등",
+    "학년": "5~6",
+    "신청총인원": "7",
+    "참여강사1": "김진향",
+    "참여강사2": "김형숙",
+    "참여강사3": "",
+    "주소": "인천광역시 남동구 주안로259번길 23 1층",
+    "담당자": "박지현",
+    "연락처": "032-432-4344"
+  },
+  {
+    "배정번호": "A02074(H)",
+    "교육날짜": "2026-02-20",
+    "교육회차": "1*2",
+    "교육시간": "15:00~16:30",
+    "기관명": "석남지역아동",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "7",
+    "참여강사1": "이정미",
+    "참여강사2": "이진호",
+    "참여강사3": "",
+    "주소": "인천광역시 남동구 구월남로 68 2층",
+    "담당자": "백민주",
+    "연락처": "032-428-4348"
+  },
+  {
+    "배정번호": "A02072(H)",
+    "교육날짜": "2026-02-23",
+    "교육회차": "2*2",
+    "교육시간": "13:00~14:30",
+    "기관명": "석남지역아동",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "11",
+    "참여강사1": "김형숙",
+    "참여강사2": "신나영",
+    "참여강사3": "",
+    "주소": "인천광역시 서구 서달로137번길 13 신광아파트 상가",
+    "담당자": "",
+    "연락처": "032-579-3654"
+  },
+  {
+    "배정번호": "A02073(H)",
+    "교육날짜": "2026-02-23",
+    "교육회차": "2*2",
+    "교육시간": "13:00~14:30",
+    "기관명": "석남지역아동",
+    "학년구분": "중등",
+    "학년": "1~2",
+    "신청총인원": "12",
+    "참여강사1": "이정미",
+    "참여강사2": "임소영",
+    "참여강사3": "",
+    "주소": "인천광역시 서구 서달로137번길 13 신광아파트 상가",
+    "담당자": "",
+    "연락처": "032-579-3654"
+  },
+  {
+    "배정번호": "A02074(H)",
+    "교육날짜": "2026-02-27",
+    "교육회차": "2*2",
+    "교육시간": "15:00~16:30",
+    "기관명": "석남지역아동",
+    "학년구분": "초등",
+    "학년": "3~6",
+    "신청총인원": "7",
+    "참여강사1": "이정미",
+    "참여강사2": "이진호",
+    "참여강사3": "",
+    "주소": "인천광역시 남동구 구월남로 68 2층",
+    "담당자": "백민주",
+    "연락처": "032-428-4348"
+  },
+  {
+    "배정번호": "A03015(H)",
+    "교육날짜": "2026-03-09",
+    "교육회차": "1*2",
+    "교육시간": "10:10~11:35",
+    "기관명": "인천예림학교",
+    "학년구분": "고등",
+    "학년": "1",
+    "신청총인원": "7",
+    "참여강사1": "황미현",
+    "참여강사2": "조윤희",
+    "참여강사3": "신나영",
+    "주소": "인천광역시 부평구 동수로 87",
+    "담당자": "윤두수",
+    "연락처": "010-4023-9588"
+  },
+  {
+    "배정번호": "A03016(H)",
+    "교육날짜": "2026-03-10",
+    "교육회차": "1*2",
+    "교육시간": "10:10~11:35",
+    "기관명": "인천예림학교",
+    "학년구분": "고등",
+    "학년": "2",
+    "신청총인원": "7",
+    "참여강사1": "임소영",
+    "참여강사2": "조윤희",
+    "참여강사3": "김형숙",
+    "주소": "인천광역시 부평구 동수로 87",
+    "담당자": "윤두수",
+    "연락처": "010-4023-9588"
+  },
+  {
+    "배정번호": "A03017(H)",
+    "교육날짜": "2026-03-11",
+    "교육회차": "1*2",
+    "교육시간": "10:10~11:35",
+    "기관명": "인천예림학교",
+    "학년구분": "고등",
+    "학년": "3",
+    "신청총인원": "7",
+    "참여강사1": "조윤희",
+    "참여강사2": "신나영",
+    "참여강사3": "이정미",
+    "주소": "인천광역시 부평구 동수로 87",
+    "담당자": "윤두수",
+    "연락처": "010-4023-9588"
+  },
+  {
+    "배정번호": "A03015(H)",
+    "교육날짜": "2026-03-16",
+    "교육회차": "2*2",
+    "교육시간": "10:10~11:35",
+    "기관명": "인천예림학교",
+    "학년구분": "고등",
+    "학년": "1",
+    "신청총인원": "7",
+    "참여강사1": "황미현",
+    "참여강사2": "조윤희",
+    "참여강사3": "신나영",
+    "주소": "인천광역시 부평구 동수로 87",
+    "담당자": "윤두수",
+    "연락처": "010-4023-9588"
+  },
+  {
+    "배정번호": "A03016(H)",
+    "교육날짜": "2026-03-17",
+    "교육회차": "2*2",
+    "교육시간": "10:10~11:35",
+    "기관명": "인천예림학교",
+    "학년구분": "고등",
+    "학년": "2",
+    "신청총인원": "7",
+    "참여강사1": "임소영",
+    "참여강사2": "조윤희",
+    "참여강사3": "김형숙",
+    "주소": "인천광역시 부평구 동수로 87",
+    "담당자": "윤두수",
+    "연락처": "010-4023-9588"
+  },
+  {
+    "배정번호": "A03017(H)",
+    "교육날짜": "2026-03-18",
+    "교육회차": "2*2",
+    "교육시간": "10:10~11:35",
+    "기관명": "인천예림학교",
+    "학년구분": "고등",
+    "학년": "3",
+    "신청총인원": "7",
+    "참여강사1": "조윤희",
+    "참여강사2": "신나영",
+    "참여강사3": "이정미",
+    "주소": "인천광역시 부평구 동수로 87",
+    "담당자": "윤두수",
+    "연락처": "010-4023-9588"
+  },
+  {
+    "배정번호": "A03005(H)",
+    "교육날짜": "2026-03-23",
+    "교육회차": "1*2",
+    "교육시간": "09:00~10:40",
+    "기관명": "화도진중학교",
+    "학년구분": "중등",
+    "학년": "1",
+    "신청총인원": "7",
+    "참여강사1": "조윤희",
+    "참여강사2": "이진호",
+    "참여강사3": "양선주",
+    "주소": "인천광역시 동구 화수로 64",
+    "담당자": "권정아",
+    "연락처": "010-2122-5543"
+  },
+  {
+    "배정번호": "A03006(H)",
+    "교육날짜": "2026-03-23",
+    "교육회차": "1*2",
+    "교육시간": "10:50~12:30",
+    "기관명": "화도진중학교",
+    "학년구분": "중등",
+    "학년": "2",
+    "신청총인원": "7",
+    "참여강사1": "이진호",
+    "참여강사2": "조윤희",
+    "참여강사3": "양선주",
+    "주소": "인천광역시 동구 화수로 64",
+    "담당자": "권정아",
+    "연락처": "010-2122-5543"
+  },
+  {
+    "배정번호": "A03007(H)",
+    "교육날짜": "2026-03-24",
+    "교육회차": "1*2",
+    "교육시간": "09:55~11:35",
+    "기관명": "화도진중학교",
+    "학년구분": "중등",
+    "학년": "3",
+    "신청총인원": "8",
+    "참여강사1": "양선주",
+    "참여강사2": "이진호",
+    "참여강사3": "조윤희 ",
+    "주소": "인천광역시 동구 화수로 64",
+    "담당자": "권정아",
+    "연락처": "010-2122-5543"
+  },
+  {
+    "배정번호": "A03018(H)",
+    "교육날짜": "2026-03-24",
+    "교육회차": "1*2",
+    "교육시간": "13:30~15:10",
+    "기관명": "인천예일중학교",
+    "학년구분": "중등",
+    "학년": "2~3",
+    "신청총인원": "4",
+    "참여강사1": "조윤희",
+    "참여강사2": "김진향 ",
+    "참여강사3": "",
+    "주소": "인천광역시 계양구 장제로 995번길 39",
+    "담당자": "이규석",
+    "연락처": "010-3254-2811"
+  },
+  {
+    "배정번호": "A03019(H)",
+    "교육날짜": "2026-03-25",
+    "교육회차": "1*2",
+    "교육시간": "09:00~10:40",
+    "기관명": "인천석남중학교",
+    "학년구분": "중등",
+    "학년": "1~2",
+    "신청총인원": "11",
+    "참여강사1": "조윤희",
+    "참여강사2": "이진호 ",
+    "참여강사3": "임소영",
+    "주소": "인천광역시 서구 건지로 333",
+    "담당자": "이인희",
+    "연락처": "010-2676-4856"
+  },
+  {
+    "배정번호": "A03020(H)",
+    "교육날짜": "2026-03-25",
+    "교육회차": "1*2",
+    "교육시간": "10:50~12:30",
+    "기관명": "인천석남중학교",
+    "학년구분": "중등",
+    "학년": "3",
+    "신청총인원": "10",
+    "참여강사1": "조윤희 ",
+    "참여강사2": "이진호",
+    "참여강사3": "임소영",
+    "주소": "인천광역시 서구 건지로 333",
+    "담당자": "이인희",
+    "연락처": "010-2676-4856"
+  },
+  {
+    "배정번호": "A03019(H)",
+    "교육날짜": "2026-03-27",
+    "교육회차": "2*2",
+    "교육시간": "09:00~10:40",
+    "기관명": "인천석남중학교",
+    "학년구분": "중등",
+    "학년": "1~2",
+    "신청총인원": "11",
+    "참여강사1": "조윤희",
+    "참여강사2": "이진호 ",
+    "참여강사3": "임소영",
+    "주소": "인천광역시 서구 건지로 333",
+    "담당자": "이인희",
+    "연락처": "010-2676-4856"
+  },
+  {
+    "배정번호": "A03020(H)",
+    "교육날짜": "2026-03-27",
+    "교육회차": "2*2",
+    "교육시간": "10:50~12:30",
+    "기관명": "인천석남중학교",
+    "학년구분": "중등",
+    "학년": "3",
+    "신청총인원": "10",
+    "참여강사1": "조윤희 ",
+    "참여강사2": "이진호",
+    "참여강사3": "임소영",
+    "주소": "인천광역시 서구 건지로 333",
+    "담당자": "이인희",
+    "연락처": "010-2676-4856"
+  },
+  {
+    "배정번호": "A03005(H)",
+    "교육날짜": "2026-03-30",
+    "교육회차": "2*2",
+    "교육시간": "09:00~10:40",
+    "기관명": "화도진중학교",
+    "학년구분": "중등",
+    "학년": "1",
+    "신청총인원": "7",
+    "참여강사1": "조윤희",
+    "참여강사2": "이진호",
+    "참여강사3": "양선주",
+    "주소": "인천광역시 동구 화수로 64",
+    "담당자": "권정아",
+    "연락처": "010-2122-5543"
+  },
+  {
+    "배정번호": "A03006(H)",
+    "교육날짜": "2026-03-30",
+    "교육회차": "2*2",
+    "교육시간": "10:50~12:30",
+    "기관명": "화도진중학교",
+    "학년구분": "중등",
+    "학년": "2",
+    "신청총인원": "7",
+    "참여강사1": "이진호",
+    "참여강사2": "조윤희",
+    "참여강사3": "양선주",
+    "주소": "인천광역시 동구 화수로 64",
+    "담당자": "권정아",
+    "연락처": "010-2122-5543"
+  },
+  {
+    "배정번호": "A03018(H)",
+    "교육날짜": "2026-03-31",
+    "교육회차": "2*2",
+    "교육시간": "13:30~15:10",
+    "기관명": "인천예일중학교",
+    "학년구분": "중등",
+    "학년": "2~3",
+    "신청총인원": "4",
+    "참여강사1": "조윤희",
+    "참여강사2": "김진향 ",
+    "참여강사3": "",
+    "주소": "인천광역시 계양구 장제로 995번길 39",
+    "담당자": "이규석",
+    "연락처": "010-3254-2811"
+  },
+  {
+    "배정번호": "A03007(H)",
+    "교육날짜": "2026-03-31",
+    "교육회차": "2*2",
+    "교육시간": "09:55~11:35",
+    "기관명": "화도진중학교",
+    "학년구분": "중등",
+    "학년": "3",
+    "신청총인원": "8",
+    "참여강사1": "양선주",
+    "참여강사2": "이진호",
+    "참여강사3": "조윤희 ",
+    "주소": "인천광역시 동구 화수로 64",
+    "담당자": "권정아",
+    "연락처": "010-2122-5543"
+  }
+];
+
+        let filteredData = [...educationData];
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        function isPastDate(dateStr) {
+            const itemDate = new Date(dateStr);
+            itemDate.setHours(0, 0, 0, 0);
+            return itemDate < today;
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${month}-${day}`;
+        }
+
+        function scrollToFirstResult() {
+            const firstItem = document.querySelector('.timeline-item');
+            if (firstItem) {
+                firstItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function renderTimeline() {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                timeline.innerHTML = '<div class="no-results">검색 결과가 없습니다.</div>';
+                return;
+            }
+
+            filteredData.forEach((item, index) => {
+                const timelineItem = document.createElement('div');
+                const isPast = isPastDate(item.교육날짜);
+                const desktopClass = index % 2 === 0 ? 'left' : 'right';
+                timelineItem.className = `timeline-item ${desktopClass} ${isPast ? 'past' : ''}`;
+                timelineItem.setAttribute('data-date', item.교육날짜);
+
+                const dateDisplay = formatDate(item.교육날짜);
+
+                timelineItem.innerHTML = `
+                    <div class="timeline-date">${dateDisplay}</div>
+                    <div class="timeline-content">
+                        <div class="institution-name">${item.기관명}</div>
+                        <div class="info-row">
+                            <span class="info-label">교육회차:</span>
+                            <span class="info-value">${item.교육회차}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">교육시간:</span>
+                            <span class="info-value">${item.교육시간}</span>
+                        </div>
+                        <button class="toggle-btn" onclick="toggleDetails(this)">세부정보 보기 ▼</button>
+                        <div class="details">
+                            <div class="info-row">
+                                <span class="info-label">배정번호:</span>
+                                <span class="info-value">${item.배정번호}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">학년구분:</span>
+                                <span class="info-value">${item.학년구분}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">학년:</span>
+                                <span class="info-value">${item.학년}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">신청인원:</span>
+                                <span class="info-value">${item.신청총인원}명</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">참여강사1:</span>
+                                <span class="info-value">${item.참여강사1}</span>
+                            </div>
+                            ${item.참여강사2 ? `<div class="info-row">
+                                <span class="info-label">참여강사2:</span>
+                                <span class="info-value">${item.참여강사2}</span>
+                            </div>` : ''}
+                            ${item.참여강사3 ? `<div class="info-row">
+                                <span class="info-label">참여강사3:</span>
+                                <span class="info-value">${item.참여강사3}</span>
+                            </div>` : ''}
+                            <div class="info-row">
+                                <span class="info-label">주소:</span>
+                                <span class="info-value">${item.주소}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">담당자:</span>
+                                <span class="info-value">${item.담당자}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">연락처:</span>
+                                <span class="info-value">${item.연락처}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+        function toggleDetails(button) {
+            const details = button.nextElementSibling;
+            details.classList.toggle('show');
+            button.textContent = details.classList.contains('show') ? '세부정보 숨기기 ▲' : '세부정보 보기 ▼';
+        }
+
+        function updateStats() {
+            const stats = document.getElementById('stats');
+            const totalSessions = filteredData.length;
+            const totalStudents = filteredData.reduce((sum, item) => sum + (parseInt(item.신청총인원) || 0), 0);
+            const uniqueInstitutions = new Set(filteredData.map(item => item.기관명)).size;
+
+            stats.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${totalSessions}</div>
+                    <div class="stat-label">총 교육 세션</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${uniqueInstitutions}</div>
+                    <div class="stat-label">참여 기관</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${totalStudents}</div>
+                    <div class="stat-label">총 참여 인원</div>
+                </div>
+            `;
+        }
+
+        function populateMonthFilter() {
+            const months = new Set(educationData.map(item => {
+                const date = new Date(item.교육날짜);
+                return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+            }));
+
+            const monthFilter = document.getElementById('monthFilter');
+            [...months].sort().forEach(month => {
+                const option = document.createElement('option');
+                option.value = month;
+                const [year, monthNum] = month.split('-');
+                option.textContent = `${year}년 ${monthNum}월`;
+                monthFilter.appendChild(option);
+            });
+        }
+
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                filterData();
+                if (e.target.value.length >= 2) {
+                    setTimeout(scrollToFirstResult, 100);
+                }
+            }, 300);
+        });
+
+        document.getElementById('monthFilter').addEventListener('change', function(e) {
+            filterData();
+            setTimeout(scrollToFirstResult, 100);
+        });
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const selectedMonth = document.getElementById('monthFilter').value;
+
+            filteredData = educationData.filter(item => {
+                const matchesSearch = !searchTerm || searchTerm.length < 2 ||
+                    item.기관명.toLowerCase().includes(searchTerm);
+
+                const itemMonth = item.교육날짜.substring(0, 7);
+                const matchesMonth = !selectedMonth || itemMonth === selectedMonth;
+
+                return matchesSearch && matchesMonth;
+            });
+
+            renderTimeline();
+            updateStats();
+        }
+
+        // 초기 렌더링
+        populateMonthFilter();
+        renderTimeline();
+        updateStats();
+    </script>
+</body>
+</html>
